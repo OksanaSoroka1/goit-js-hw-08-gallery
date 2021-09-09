@@ -67,7 +67,7 @@ function onGalleryListClick(event) {
   //Очистка значения атрибута src элемента img.lightbox__image.Это необходимо для того,чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
   removeLightboxImageAttributes();
   //Подмена значения атрибута src элемента img.lightbox__image.
-  setLightboxImageAttributes(originalImgUrl, isImgEl.alt);
+  setImageAttributesValue(originalImgUrl, isImgEl.alt);
   
   const currentImgIndex = imgArrey.forEach((currentValue, index, arrey) => {
     if (isImgEl.alt === currentValue.alt) {
@@ -89,9 +89,10 @@ function openLightbox(lightbox) {
   window.addEventListener('keydown', onArrowLeftPress);
 return lightbox.classList.add('is-open');
 };
+//
 
 //Подмена значения атрибута src элемента img.lightbox__image.
-function setLightboxImageAttributes(imgUrl, imgAlt) {
+function setImageAttributesValue(imgUrl, imgAlt) {
   lightboxImageEl.src = imgUrl;
   lightboxImageEl.alt = imgAlt;
 };
@@ -100,8 +101,7 @@ function setLightboxImageAttributes(imgUrl, imgAlt) {
 function removeLightboxImageAttributes() {
   const currentActiveImage = lightboxImageEl.closest('.js-lightbox.is-open');
   if (currentActiveImage) {
-    lightboxImageEl.src = '';
-    lightboxImageEl.alt = '';
+    setImageAttributesValue('', '')
   };
 };
 
@@ -124,8 +124,7 @@ function onArrowLeftPress(event) {
 };
  
 function renderImageOnArrowKeypress(element) {
- lightboxImageEl.src = element.dataset.source;
-  lightboxImageEl.alt = element.alt;
+  setImageAttributesValue(element.dataset.source, element.alt);
  }
 //Закрытие модального окна 
 //по клику на кнопку button[data - action= "close-lightbox"].
